@@ -325,3 +325,25 @@ def delete_trip(trip_id):
     conn.close()
 
     print("✅ Trip deleted successfully.")
+
+
+# ==========================
+# DATABASE QUERY FUNCTIONS
+# ==========================
+
+
+def get_total_trips():
+
+    conn = connect()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM trips
+    """)
+
+    total = cursor.fetchone()[0]
+
+    conn.close()
+
+    return total
