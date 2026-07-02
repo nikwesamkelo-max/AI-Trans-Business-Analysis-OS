@@ -81,3 +81,48 @@ def create_tables():
     conn.close()
 
     print("✅ Database Version 2.0 Ready")
+
+# ==========================
+# CUSTOMER CRUD
+# ==========================
+
+def add_customer(customer_name, phone, email):
+
+    conn = connect()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        INSERT INTO customers (
+            customer_name,
+            phone,
+            email,
+            created_at
+        )
+        VALUES (?, ?, ?, DATE('now'))
+    """, (
+        customer_name,
+        phone,
+        email
+    ))
+
+    conn.commit()
+    conn.close()
+
+    print("✅ Customer added successfully.")
+
+def view_customers():
+
+    conn = connect()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT *
+        FROM customers
+        ORDER BY customer_name
+    """)
+
+    customers = cursor.fetchall()
+
+    conn.close()
+
+    return customers
