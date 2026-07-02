@@ -172,3 +172,19 @@ def update_customer(customer_id, phone, email):
     conn.close()
 
     print("✅ Customer updated successfully.")
+
+
+def delete_customer(customer_id):
+
+    conn = connect()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        DELETE FROM customers
+        WHERE customer_id = ?
+    """, (customer_id,))
+
+    conn.commit()
+    conn.close()
+
+    print("✅ Customer deleted successfully.")
