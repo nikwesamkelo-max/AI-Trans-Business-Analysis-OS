@@ -311,7 +311,7 @@ def update_trip_status(trip_id, new_status):
     print("✅ Trip status updated successfully.")
     
     
-    def delete_trip(trip_id):
+def delete_trip(trip_id):
 
     conn = connect()
     cursor = conn.cursor()
