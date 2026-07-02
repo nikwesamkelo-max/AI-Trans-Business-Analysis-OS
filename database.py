@@ -365,3 +365,21 @@ def get_completed_trips():
     conn.close()
 
     return total
+
+
+def get_active_trips():
+
+    conn = connect()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM trips
+        WHERE status IN ('Booked', 'Driver Assigned', 'In Progress')
+    """)
+
+    total = cursor.fetchone()[0]
+
+    conn.close()
+
+    return total
