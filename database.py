@@ -34,7 +34,7 @@ def create_tables():
 
             customer_name TEXT NOT NULL,
 
-            phone TEXT,
+            phone TEXT UNIQUE,
 
             email TEXT,
 
@@ -91,24 +91,30 @@ def add_customer(customer_name, phone, email):
     conn = connect()
     cursor = conn.cursor()
 
-    cursor.execute("""
-        INSERT INTO customers (
+    try:
+        cursor.execute("""
+            INSERT INTO customers (
+                customer_name,
+                phone,
+                email,
+                created_at
+            )
+            VALUES (?, ?, ?, DATE('now'))
+        """, (
             customer_name,
             phone,
-            email,
-            created_at
-        )
-        VALUES (?, ?, ?, DATE('now'))
-    """, (
-        customer_name,
-        phone,
-        email
-    ))
+            email
+        ))
 
-    conn.commit()
-    conn.close()
+        conn.commit()
+        print("✅ Customer added successfully.")
 
-    print("✅ Customer added successfully.")
+    except sqlite3.IntegrityError:
+        print("❌ A customer with this phone number already exists.")
+
+    finally:
+        conn.close()
+        
 
 def view_customers():
 
@@ -126,3 +132,43 @@ def view_customers():
     conn.close()
 
     return customers
+
+
+def find_customer(customer_name):
+
+    conn = connect()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT *
+        FROM customers
+        WHERE customer_name LIKE ?
+    """, (f"%{customer_name}%",))
+
+    customer = cursor.fetchall()
+
+    conn.close()
+
+    return customer
+
+
+def update_customer(customer_id, phone, email):
+
+    conn = connect()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        UPDATE customers
+        SET phone = ?,
+            email = ?
+        WHERE customer_id = ?
+    """, (
+        phone,
+        email,
+        customer_id
+    ))
+
+    conn.commit()
+    conn.close()
+
+    print("✅ Customer updated successfully.")
