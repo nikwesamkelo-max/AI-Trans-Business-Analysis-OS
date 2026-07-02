@@ -347,3 +347,21 @@ def get_total_trips():
     conn.close()
 
     return total
+
+
+def get_completed_trips():
+
+    conn = connect()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM trips
+        WHERE status = 'Completed'
+    """)
+
+    total = cursor.fetchone()[0]
+
+    conn.close()
+
+    return total
