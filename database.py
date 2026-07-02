@@ -289,3 +289,39 @@ def find_trip(trip_id):
     conn.close()
 
     return trip
+
+
+def update_trip_status(trip_id, new_status):
+
+    conn = connect()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        UPDATE trips
+        SET status = ?
+        WHERE trip_id = ?
+    """, (
+        new_status,
+        trip_id
+    ))
+
+    conn.commit()
+    conn.close()
+
+    print("✅ Trip status updated successfully.")
+    
+    
+    def delete_trip(trip_id):
+
+    conn = connect()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        DELETE FROM trips
+        WHERE trip_id = ?
+    """, (trip_id,))
+
+    conn.commit()
+    conn.close()
+
+    print("✅ Trip deleted successfully.")
