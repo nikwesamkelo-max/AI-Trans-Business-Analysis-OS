@@ -188,3 +188,104 @@ def delete_customer(customer_id):
     conn.close()
 
     print("✅ Customer deleted successfully.")
+
+
+# ==========================
+# TRIP CRUD
+# ==========================
+
+def add_trip(
+    customer_id,
+    pickup,
+    destination,
+    vehicle,
+    driver,
+    fare,
+    fuel_cost,
+    payment_method,
+    trip_date
+):
+
+    conn = connect()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        INSERT INTO trips (
+            customer_id,
+            pickup,
+            destination,
+            vehicle,
+            driver,
+            fare,
+            fuel_cost,
+            payment_method,
+            status,
+            trip_date
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """, (
+        customer_id,
+        pickup,
+        destination,
+        vehicle,
+        driver,
+        fare,
+        fuel_cost,
+        payment_method,
+        "Booked",
+        trip_date
+    ))
+
+    conn.commit()
+    conn.close()
+
+    print("✅ Trip booked successfully.")
+
+
+def view_trips():
+
+    conn = connect()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT
+            trips.trip_id,
+            customers.customer_name,
+            pickup,
+            destination,
+            vehicle,
+            driver,
+            fare,
+            fuel_cost,
+            payment_method,
+            status,
+            trip_date
+        FROM trips
+        JOIN customers
+        ON trips.customer_id = customers.customer_id
+        ORDER BY trip_date DESC
+    """)
+
+    trips = cursor.fetchall()
+
+    conn.close()
+
+    return trips
+
+
+def find_trip(trip_id):
+
+    conn = connect()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT *
+        FROM trips
+        WHERE trip_id = ?
+    """, (trip_id,))
+
+    trip = cursor.fetchone()
+
+    conn.close()
+
+    return trip
