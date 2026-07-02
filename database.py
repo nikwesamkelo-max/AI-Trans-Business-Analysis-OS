@@ -383,3 +383,86 @@ def get_active_trips():
     conn.close()
 
     return total
+    
+
+def get_cancelled_trips():
+
+    conn = connect()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM trips
+        WHERE status = 'Cancelled'
+    """)
+
+    total = cursor.fetchone()[0]
+
+    conn.close()
+
+    return total
+
+
+def get_total_revenue():
+
+    conn = connect()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT SUM(fare)
+        FROM trips
+        WHERE status = 'Completed'
+    """)
+
+    revenue = cursor.fetchone()[0]
+
+    conn.close()
+
+    return revenue if revenue else 0
+
+
+def get_total_fuel_cost():
+
+    conn = connect()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT SUM(fuel_cost)
+        FROM trips
+        WHERE status = 'Completed'
+    """)
+
+    fuel = cursor.fetchone()[0]
+
+    conn.close()
+
+    return fuel if fuel else 0
+
+
+def get_top_customers():
+
+    conn = connect()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT
+            customers.customer_name,
+            COUNT(trips.trip_id) AS total_trips
+
+        FROM customers
+
+        JOIN trips
+        ON customers.customer_id = trips.customer_id
+
+        GROUP BY customers.customer_id
+
+        ORDER BY total_trips DESC
+
+        LIMIT 5
+    """)
+
+    customers = cursor.fetchall()
+
+    conn.close()
+
+    return customers
