@@ -8,11 +8,9 @@ from database import (
     get_top_customers
 )
 
-=========================
-REVENUE ANALYTICS
-==========================
+#REVENUE ANALYTICS
 
- def get_total_profit():
+def get_total_profit():
 
     revenue = get_total_revenue()
 
@@ -32,11 +30,10 @@ def get_average_revenue_per_trip():
 
     return round(revenue / completed, 2)
 
-==========================
-TRIP ANALYTICS
-==========================
 
-    def get_completion_rate():
+#TRIP ANALYTICS
+
+ def get_completion_rate():
 
     total = get_total_trips()
 
@@ -71,17 +68,15 @@ def get_active_rate():
 
     return round((active / total) * 100, 2)
 
-==========================
-CUSTOMER ANALYTICS
-==========================
 
-    def get_customer_rankings():
+#CUSTOMER ANALYTICS
+
+def get_customer_rankings():
 
     return get_top_customers()
 
 
-=========================
-BUSINESS DASHBOARD
+#BUSINESS DASHBOARD
 
 def get_dashboard_data():
 
