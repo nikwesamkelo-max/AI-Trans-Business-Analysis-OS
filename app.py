@@ -273,3 +273,10 @@ def update_trip_status_ui():
     update_trip_status(trip_id, status_map[choice])
 
 
+def delete_trip_ui():
+
+    trip_id = int(input("\nEnter Trip ID: "))
+
+    delete_trip(trip_id)
+
+    
