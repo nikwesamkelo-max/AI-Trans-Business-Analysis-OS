@@ -319,3 +319,21 @@ def show_revenue_report():
     print(f"Total Profit            : R{get_total_profit():.2f}")
 
     print(f"Average Revenue/Trip    : R{get_average_revenue_per_trip():.2f}") 
+
+
+def show_customer_rankings():
+
+    print("\n========== TOP CUSTOMERS ==========\n")
+
+    customers = get_customer_rankings()
+
+    if not customers:
+        print("No customer data available.")
+        return
+
+    for customer in customers:
+
+        print(
+            f"{customer['customer_name']} "
+            f"- {customer['total_trips']} trips"
+        )
