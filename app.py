@@ -84,3 +84,72 @@ def dashboard_menu():
     return input("\nSelect an option: ")
 
 
+#CUSTOMER FEATURES
+
+def add_customer_ui():
+
+    print("\n=== ADD CUSTOMER ===")
+
+    customer_name = input("Customer Name: ")
+    phone = input("Phone Number: ")
+    email = input("Email: ")
+
+    add_customer(customer_name, phone, email)
+
+
+def view_customers_ui():
+
+    print("\n=== CUSTOMER LIST ===")
+
+    customers = view_customers()
+
+    if not customers:
+        print("No customers found.")
+        return
+
+    for customer in customers:
+
+        print("-" * 40)
+
+        print(f"ID: {customer['customer_id']}")
+        print(f"Name: {customer['customer_name']}")
+        print(f"Phone: {customer['phone']}")
+        print(f"Email: {customer['email']}")
+
+
+def find_customer_ui():
+
+    name = input("\nEnter customer name: ")
+
+    customers = find_customer(name)
+
+    if not customers:
+        print("Customer not found.")
+        return
+
+    for customer in customers:
+
+        print("-" * 40)
+
+        print(f"ID: {customer['customer_id']}")
+        print(f"Name: {customer['customer_name']}")
+        print(f"Phone: {customer['phone']}")
+        print(f"Email: {customer['email']}")
+
+
+def update_customer_ui():
+
+    customer_id = int(input("\nCustomer ID: "))
+
+    phone = input("New Phone: ")
+
+    email = input("New Email: ")
+
+    update_customer(customer_id, phone, email)
+
+
+def delete_customer_ui():
+
+    customer_id = int(input("\nCustomer ID: "))
+
+    delete_customer(customer_id)
