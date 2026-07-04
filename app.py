@@ -25,3 +25,62 @@ from analytics import (
     get_active_rate,
     get_customer_rankings
 )
+
+# ==========================
+# MENU FUNCTIONS
+# ==========================
+
+def main_menu():
+
+    print("\n" + "=" * 40)
+    print(" TRANSPORT AI BUSINESS OS ")
+    print("=" * 40)
+
+    print("1. Customer Management")
+    print("2. Trip Management")
+    print("3. Business Dashboard")
+    print("0. Exit")
+
+    return input("\nSelect an option: ")
+
+
+def customer_menu():
+
+    print("\n--- CUSTOMER MANAGEMENT ---")
+
+    print("1. Add Customer")
+    print("2. View Customers")
+    print("3. Find Customer")
+    print("4. Update Customer")
+    print("5. Delete Customer")
+    print("0. Back")
+
+    return input("\nSelect an option: ")
+
+
+def trip_menu():
+
+    print("\n--- TRIP MANAGEMENT ---")
+
+    print("1. Add Trip")
+    print("2. View Trips")
+    print("3. Find Trip")
+    print("4. Update Trip Status")
+    print("5. Delete Trip")
+    print("0. Back")
+
+    return input("\nSelect an option: ")
+    
+    
+def dashboard_menu():
+
+    print("\n--- BUSINESS DASHBOARD ---")
+
+    print("1. Business Summary")
+    print("2. Revenue Report")
+    print("3. Customer Rankings")
+    print("0. Back")
+
+    return input("\nSelect an option: ")
+
+
