@@ -432,3 +432,10 @@ elif choice == "0":
             print("\nThank you for using Transport AI Business OS.")
 
             break
+
+else:
+
+            print("Invalid option.")
+
+if __name__ == "__main__":
+    main()
