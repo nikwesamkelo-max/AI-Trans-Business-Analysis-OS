@@ -278,5 +278,44 @@ def delete_trip_ui():
     trip_id = int(input("\nEnter Trip ID: "))
 
     delete_trip(trip_id)
-
     
+
+#DASHBOARD FEATURES
+
+def show_dashboard():
+
+    print("\n========== BUSINESS DASHBOARD ==========\n")
+
+    dashboard = get_dashboard_data()
+
+    print(f"Total Trips        : {dashboard['total_trips']}")
+    print(f"Completed Trips    : {dashboard['completed_trips']}")
+    print(f"Active Trips       : {dashboard['active_trips']}")
+    print(f"Cancelled Trips    : {dashboard['cancelled_trips']}")
+
+    print("-" * 40)
+
+    print(f"Total Revenue      : R{dashboard['total_revenue']:.2f}")
+    print(f"Fuel Cost          : R{dashboard['fuel_cost']:.2f}")
+    print(f"Total Profit       : R{dashboard['profit']:.2f}")
+
+    print("-" * 40)
+
+    print(f"Average Revenue    : R{dashboard['average_revenue']:.2f}")
+
+    print(f"Completion Rate    : {dashboard['completion_rate']}%")
+    print(f"Cancellation Rate  : {dashboard['cancellation_rate']}%")
+    print(f"Active Rate        : {dashboard['active_rate']}%")
+    
+
+def show_revenue_report():
+
+    print("\n========== REVENUE REPORT ==========\n")
+
+    print(f"Total Revenue           : R{get_dashboard_data()['total_revenue']:.2f}")
+
+    print(f"Fuel Cost               : R{get_dashboard_data()['fuel_cost']:.2f}")
+
+    print(f"Total Profit            : R{get_total_profit():.2f}")
+
+    print(f"Average Revenue/Trip    : R{get_average_revenue_per_trip():.2f}") 
