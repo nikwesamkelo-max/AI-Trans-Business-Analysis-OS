@@ -347,3 +347,31 @@ def main():
     while True:
 
         choice = main_menu()
+
+
+if choice == "1":
+
+            while True:
+
+                customer_choice = customer_menu()
+
+                if customer_choice == "1":
+                    add_customer_ui()
+
+                elif customer_choice == "2":
+                    view_customers_ui()
+
+                elif customer_choice == "3":
+                    find_customer_ui()
+
+                elif customer_choice == "4":
+                    update_customer_ui()
+
+                elif customer_choice == "5":
+                    delete_customer_ui()
+
+                elif customer_choice == "0":
+                    break
+
+                else:
+                    print("Invalid option.")
