@@ -425,3 +425,10 @@ elif choice == "3":
 
                 else:
                     print("Invalid option.")
+
+
+elif choice == "0":
+
+            print("\nThank you for using Transport AI Business OS.")
+
+            break
