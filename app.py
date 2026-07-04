@@ -375,3 +375,31 @@ if choice == "1":
 
                 else:
                     print("Invalid option.")
+
+
+elif choice == "2":
+
+            while True:
+
+                trip_choice = trip_menu()
+
+                if trip_choice == "1":
+                    add_trip_ui()
+
+                elif trip_choice == "2":
+                    view_trips_ui()
+
+                elif trip_choice == "3":
+                    find_trip_ui()
+
+                elif trip_choice == "4":
+                    update_trip_status_ui()
+
+                elif trip_choice == "5":
+                    delete_trip_ui()
+
+                elif trip_choice == "0":
+                    break
+
+                else:
+                    print("Invalid option.")
