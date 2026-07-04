@@ -403,3 +403,25 @@ elif choice == "2":
 
                 else:
                     print("Invalid option.")
+
+
+elif choice == "3":
+
+            while True:
+
+                dashboard_choice = dashboard_menu()
+
+                if dashboard_choice == "1":
+                    show_dashboard()
+
+                elif dashboard_choice == "2":
+                    show_revenue_report()
+
+                elif dashboard_choice == "3":
+                    show_customer_rankings()
+
+                elif dashboard_choice == "0":
+                    break
+
+                else:
+                    print("Invalid option.")
