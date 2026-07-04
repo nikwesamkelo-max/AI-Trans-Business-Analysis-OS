@@ -153,3 +153,123 @@ def delete_customer_ui():
     customer_id = int(input("\nCustomer ID: "))
 
     delete_customer(customer_id)
+
+
+#TRIP FEATURES
+
+def add_trip_ui():
+
+    print("\n=== BOOK A TRIP ===")
+
+    customers = view_customers()
+
+    if not customers:
+        print("No customers found. Add a customer first.")
+        return
+
+    print("\nAvailable Customers")
+    print("-" * 40)
+
+    for customer in customers:
+        print(f"{customer['customer_id']} - {customer['customer_name']}")
+
+    customer_id = int(input("\nCustomer ID: "))
+
+    pickup = input("Pickup Location: ")
+    destination = input("Destination: ")
+    vehicle = input("Vehicle: ")
+    driver = input("Driver: ")
+
+    fare = float(input("Fare: "))
+    fuel_cost = float(input("Fuel Cost: "))
+
+    payment_method = input("Payment Method: ")
+
+    trip_date = input("Trip Date (YYYY-MM-DD): ")
+
+    add_trip(
+        customer_id,
+        pickup,
+        destination,
+        vehicle,
+        driver,
+        fare,
+        fuel_cost,
+        payment_method,
+        trip_date
+        )
+
+
+def view_trips_ui():
+
+    print("\n=== TRIP LIST ===")
+
+    trips = view_trips()
+
+    if not trips:
+        print("No trips found.")
+        return
+
+    for trip in trips:
+
+        print("-" * 40)
+
+        print(f"Trip ID: {trip['trip_id']}")
+        print(f"Customer: {trip['customer_name']}")
+        print(f"Pickup: {trip['pickup']}")
+        print(f"Destination: {trip['destination']}")
+        print(f"Vehicle: {trip['vehicle']}")
+        print(f"Driver: {trip['driver']}")
+        print(f"Fare: R{trip['fare']:.2f}")
+        print(f"Fuel Cost: R{trip['fuel_cost']:.2f}")
+        print(f"Payment: {trip['payment_method']}")
+        print(f"Status: {trip['status']}")
+        print(f"Date: {trip['trip_date']}")
+
+
+def find_trip_ui():
+
+    trip_id = int(input("\nEnter Trip ID: "))
+
+    trip = find_trip(trip_id)
+
+    if not trip:
+        print("Trip not found.")
+        return
+
+    print("-" * 40)
+    print(f"Trip ID: {trip['trip_id']}")
+    print(f"Customer ID: {trip['customer_id']}")
+    print(f"Pickup: {trip['pickup']}")
+    print(f"Destination: {trip['destination']}")
+    print(f"Status: {trip['status']}")
+
+
+def update_trip_status_ui():
+
+    trip_id = int(input("\nEnter Trip ID: "))
+
+    print("\nChoose New Status")
+    print("1. Booked")
+    print("2. Driver Assigned")
+    print("3. In Progress")
+    print("4. Completed")
+    print("5. Cancelled")
+
+    choice = input("\nSelect Status: ")
+
+    status_map = {
+        "1": "Booked",
+        "2": "Driver Assigned",
+        "3": "In Progress",
+        "4": "Completed",
+        "5": "Cancelled"
+    }
+
+    if choice not in status_map:
+        print("Invalid status selected.")
+        return
+
+    update_trip_status(trip_id, status_map[choice])
+
+
