@@ -337,3 +337,13 @@ def show_customer_rankings():
             f"{customer['customer_name']} "
             f"- {customer['total_trips']} trips"
         )
+        
+#MAIN PROGRAM 
+
+def main():
+
+    create_tables()
+
+    while True:
+
+        choice = main_menu()
