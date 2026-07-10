@@ -1,6 +1,8 @@
 import sqlite3
+import os
 
 DATABASE_NAME = "data/business.db"
+os.makedirs(os.path.dirname(DATABASE_NAME), exist_ok=True)
 
 
 # ==========================
