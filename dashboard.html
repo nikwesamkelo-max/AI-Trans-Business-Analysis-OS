@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}Dashboard · Transport OS{% endblock %}
+
+{% block content %}
+
+<header class="page-header">
+  <div class="manifest-eyebrow">Manifest No. {{ "%04d"|format(data.total_trips) }}</div>
+  <h1>Business Dashboard</h1>
+  <p class="page-sub">Live read on trips, revenue and fleet activity.</p>
+</header>
+
+<section class="kpi-grid">
+  <div class="kpi-card">
+    <div class="kpi-label">Total Trips</div>
+    <div class="kpi-value">{{ data.total_trips }}</div>
+  </div>
+  <div class="kpi-card kpi-accent-teal">
+    <div class="kpi-label">Completed</div>
+    <div class="kpi-value">{{ data.completed_trips }}</div>
+  </div>
+  <div class="kpi-card kpi-accent-amber">
+    <div class="kpi-label">Active</div>
+    <div class="kpi-value">{{ data.active_trips }}</div>
+  </div>
+  <div class="kpi-card kpi-accent-red">
+    <div class="kpi-label">Cancelled</div>
+    <div class="kpi-value">{{ data.cancelled_trips }}</div>
+  </div>
+</section>
+
+<section class="ledger-panel">
+  <div class="ledger-head">
+    <h2>Revenue Ledger</h2>
+    <span class="ledger-tag">Completed trips only</span>
+  </div>
+  <div class="ledger-rows">
+    <div class="ledger-row">
+      <span>Total Revenue</span>
+      <span class="mono">R {{ "%.2f"|format(data.total_revenue) }}</span>
+    </div>
+    <div class="ledger-row">
+      <span>Fuel Cost</span>
+      <span class="mono">− R {{ "%.2f"|format(data.fuel_cost) }}</span>
+    </div>
+    <div class="ledger-row ledger-total">
+      <span>Net Profit</span>
+      <span class="mono">R {{ "%.2f"|format(data.profit) }}</span>
+    </div>
+    <div class="ledger-row">
+      <span>Average Revenue / Trip</span>
+      <span class="mono">R {{ "%.2f"|format(data.average_revenue) }}</span>
+    </div>
+  </div>
+</section>
+
+<section class="rate-grid">
+  <div class="rate-card">
+    <div class="rate-ring" style="--pct: {{ data.completion_rate }}">
+      <span>{{ data.completion_rate }}%</span>
+    </div>
+    <div class="rate-label">Completion Rate</div>
+  </div>
+  <div class="rate-card">
+    <div class="rate-ring rate-ring-amber" style="--pct: {{ data.active_rate }}">
+      <span>{{ data.active_rate }}%</span>
+    </div>
+    <div class="rate-label">Active Rate</div>
+  </div>
+  <div class="rate-card">
+    <div class="rate-ring rate-ring-red" style="--pct: {{ data.cancellation_rate }}">
+      <span>{{ data.cancellation_rate }}%</span>
+    </div>
+    <div class="rate-label">Cancellation Rate</div>
+  </div>
+</section>
+
+<section class="ledger-panel">
+  <div class="ledger-head">
+    <h2>Top Customers</h2>
+    <span class="ledger-tag">By trip count</span>
+  </div>
+  {% if data.top_customers %}
+    <div class="rank-list">
+      {% for customer in data.top_customers %}
+        <div class="rank-row">
+          <span class="rank-index">{{ loop.index }}</span>
+          <span class="rank-name">{{ customer['customer_name'] }}</span>
+          <span class="rank-count mono">{{ customer['total_trips'] }} trips</span>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="empty-note">No trips logged yet — rankings will appear once trips are recorded.</p>
+  {% endif %}
+</section>
+
+{% endblock %}
