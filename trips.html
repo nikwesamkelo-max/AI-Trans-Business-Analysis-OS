@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block title %}Trips · Transport OS{% endblock %}
+
+{% block content %}
+
+<header class="page-header">
+  <div class="manifest-eyebrow">Trip Log</div>
+  <h1>Trips</h1>
+  <p class="page-sub">Every route booked, in progress, or closed out.</p>
+</header>
+
+<section class="panel">
+  <div class="panel-head">
+    <h2>Book a Trip</h2>
+  </div>
+
+  {% if customers %}
+  <form method="POST" action="{{ url_for('trips_add') }}" class="ticket-form ticket-form-grid">
+    <label>
+      <span>Customer</span>
+      <select name="customer_id" required>
+        {% for c in customers %}
+          <option value="{{ c['customer_id'] }}">{{ c['customer_name'] }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>
+      <span>Vehicle</span>
+      <input type="text" name="vehicle" required placeholder="Toyota Quantum">
+    </label>
+    <label>
+      <span>Pickup</span>
+      <input type="text" name="pickup" required placeholder="Sandton">
+    </label>
+    <label>
+      <span>Destination</span>
+      <input type="text" name="destination" required placeholder="Rosebank">
+    </label>
+    <label>
+      <span>Driver</span>
+      <input type="text" name="driver" placeholder="Sipho">
+    </label>
+    <label>
+      <span>Payment Method</span>
+      <input type="text" name="payment_method" placeholder="Cash / Card / EFT">
+    </label>
+    <label>
+      <span>Fare (R)</span>
+      <input type="number" step="0.01" name="fare" required placeholder="150.00">
+    </label>
+    <label>
+      <span>Fuel Cost (R)</span>
+      <input type="number" step="0.01" name="fuel_cost" placeholder="40.00">
+    </label>
+    <label>
+      <span>Trip Date</span>
+      <input type="date" name="trip_date" required>
+    </label>
+    <button type="submit" class="btn-primary">Book Trip</button>
+  </form>
+  {% else %}
+    <p class="empty-note">Add a customer before booking a trip.</p>
+  {% endif %}
+</section>
+
+<section class="panel">
+  <div class="panel-head">
+    <h2>Trip Log</h2>
+    <span class="ledger-tag">{{ trips|length }} trips</span>
+  </div>
+
+  {% if trips %}
+    <div class="trip-list">
+      {% for trip in trips %}
+      <article class="trip-card">
+        <div class="trip-card-top">
+          <span class="mono trip-id">#{{ trip['trip_id'] }}</span>
+          <span class="badge badge-{{ trip['status']|lower|replace(' ', '-') }}">{{ trip['status'] }}</span>
+        </div>
+
+        <div class="route-line">
+          <span class="route-point">{{ trip['pickup'] }}</span>
+          <span class="route-track">
+            <span class="route-fill {{ 'route-fill-cancelled' if trip['status'] == 'Cancelled' }}" style="width: {{ trip['progress'] }}%;"></span>
+            <span class="route-marker" style="left: {{ trip['progress'] }}%;"></span>
+          </span>
+          <span class="route-point route-point-end">{{ trip['destination'] }}</span>
+        </div>
+
+        <div class="trip-meta">
+          <span>{{ trip['customer_name'] }}</span>
+          <span class="mono">{{ trip['vehicle'] }}{% if trip['driver'] %} · {{ trip['driver'] }}{% endif %}</span>
+          <span class="mono">{{ trip['trip_date'] }}</span>
+          <span class="mono">R {{ "%.2f"|format(trip['fare']) }}</span>
+        </div>
+
+        <form method="POST" action="{{ url_for('trips_update_status', trip_id=trip['trip_id']) }}" class="status-form">
+          <select name="status">
+            {% for s in status_options %}
+              <option value="{{ s }}" {{ 'selected' if s == trip['status'] }}>{{ s }}</option>
+            {% endfor %}
+          </select>
+          <button type="submit" class="btn-secondary">Update</button>
+        </form>
+      </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="empty-note">No trips booked yet.</p>
+  {% endif %}
+</section>
+
+{% endblock %}
